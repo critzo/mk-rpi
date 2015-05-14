@@ -47,14 +47,14 @@ def find_as_paths(hosts, maxmind_db, outfile):
         as_path = get_as_path(site, maxmind_db)
         if not as_path:
             logger.error('Failed to find AS path for %s', site)
-	    continue
+            continue
         print '%s: %s' % (site, format_as_path(as_path))
         row = [site]
         row.extend(as_path)
         csv_writer.writerow(row)
 
 
-def main(args):
+def main(_):
     logger = setup_logger()
     domains = ['.com', '.net', '.gov', '.edu', '.io', '.org']
     alexa_db = alexa.Alexa(domains, count=500)
@@ -64,12 +64,13 @@ def main(args):
     maxmind_db = maxmind.Maxmind()
     maxmind_db.load()
 
-    #with open('alexa-pt-paths.csv', 'w') as outfile:
-    #    find_as_paths(top_sites, maxmind_db, outfile)
+    with open('alexa-pt-paths.csv', 'w') as outfile:
+        find_as_paths(top_sites, maxmind_db, outfile)
 
     with open('mlab-pt-paths.csv', 'w') as outfile:
         mlab_hosts = []
-        for i in range(1, 6):        
+        # HACK: This assumes metro is lga
+        for i in range(1, 6):
             mlab_hosts.append('ndt.iupui.mlab1.lga0%s.measurement-lab.org' %
                               i)
         find_as_paths(mlab_hosts, maxmind_db, outfile)
@@ -79,6 +80,5 @@ if __name__ == "__main__":
         prog='Python NDT',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
-    # parser.add_argument('host', help='Target host')
     args = parser.parse_args()
     main(args)
