@@ -303,13 +303,12 @@ var hourToTimeString = function (hour) {
 var formatTimeForTooltipByDay = function (time) {
     var trailingDays = getTrailingDayCount();
     if (trailingDays == 0) {
-
         return d3.time.format('%B %e %-I:%M %p')(time);
     } else if (trailingDays == 1) {
         return d3.time.format('%B %e')(time);
     } else {
-        var rangeStart = new Date(time.getFullYear(), time.getMonth(), time.getDate() - trailingDays);
-        var rangeEnd = time;
+        var rangeStart = time;
+        var rangeEnd = new Date(time.getFullYear(), time.getMonth(), time.getDate() + trailingDays - 1);
 
         return d3.time.format('%B %e')(rangeStart) + ' - ' + d3.time.format('%B %e')(rangeEnd);
     }
