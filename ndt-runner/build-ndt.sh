@@ -29,4 +29,4 @@ make web100clt
 # Run NDT
 
 # TODO: Add shell command to get the server hostname from mlab-ns instead of hardcoding it
-./src/web100clt -n ndt.iupui.mlab3.lga05.measurement-lab.org
+#./src/web100clt -n ndt.iupui.mlab3.lga05.measurement-lab.org

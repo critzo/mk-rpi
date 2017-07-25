@@ -49,7 +49,7 @@ def mlab_site_from_ndt_hostname(hostname):
 
 
 def get_ndt_hostname():
-    response_raw = urllib2.urlopen('http://mlab-ns.appspot.com/ndt').read()
+    response_raw = urllib2.urlopen('https://mlab-ns.appspot.com/ndt').read()
     response = json.loads(response_raw)
     return response['fqdn']
 
