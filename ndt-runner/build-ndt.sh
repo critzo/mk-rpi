@@ -14,7 +14,16 @@ cd ~
 mv ndt/src/web100clt /opt/web100clt
 ln -s /opt/web100clt /usr/local/bin/web100clt
 
-# Run NDT
+# Install required python libraries
+cd ~/ndt-runner
+pip install pytz tzlocal
 
+# Setup data directories and files
+cd ~
+mkdir dashboard/data
+touch dashboard/data/ndt-history.csv
+
+# Run NDT
+# this section can prob. get removed
 # TODO: Add shell command to get the server hostname from mlab-ns instead of hardcoding it
 #./src/web100clt -n ndt.iupui.mlab3.lga05.measurement-lab.org
