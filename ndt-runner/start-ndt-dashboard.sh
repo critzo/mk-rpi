@@ -1,6 +1,6 @@
 #!/bin/sh
-cd ~/dashboard
+cd ~/mlab-ndt/dashboard
 screen -d -m python -m SimpleHTTPServer 9000
 
-cd ~/ndt-runner
+cd ~/mlab-ndt/ndt-runner
 screen -d -m python main.py web100clt
