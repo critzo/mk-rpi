@@ -53,6 +53,28 @@ def find_as_paths(hosts, maxmind_db, outfile):
         row.extend(as_path)
         csv_writer.writerow(row)
 
+def get_ndt_hostname():
+    response_raw = urllib2.urlopen('https://mlab-ns.appspot.com/ndt_ssl').read()
+    response = json.loads(response_raw)
+    return response['fqdn']
+
+def mlab_site_from_ndt_hostname(hostname):
+    return hostname.split('.')[3]
+
+def get_ndt_hostnames(max_sites, max_queries):
+    hostnames = []
+    sites_discovered = set()
+    queries = 0
+    while (len(sites_discovered) < max_sites) and (queries < max_queries):
+      logger.info('query #%u for NDT hosts', queries + 1)
+      ndt_hostname = get_ndt_hostname()
+      mlab_site = mlab_site_from_ndt_hostname(ndt_hostname)
+      if mlab_site not in sites_discovered:
+        logger.info('discovered new M-Lab site (%s): %s', mlab_site, ndt_hostname)
+        hostnames.append(ndt_hostname)
+        sites_discovered.add(mlab_site)
+      queries += 1
+    return hostnames
 
 def main(_):
     logger = setup_logger()
@@ -68,11 +90,11 @@ def main(_):
         find_as_paths(top_sites, maxmind_db, outfile)
 
     with open('mlab-pt-paths.csv', 'w') as outfile:
-        mlab_hosts = []
+        mlab_hosts = get_ndt_hostnames(6, 50)
         # HACK: This assumes metro is lga
-        for i in range(1, 6):
-            mlab_hosts.append('ndt.iupui.mlab1.iad0%s.measurement-lab.org' %
-                              i)
+        #for i in range(1, 6):
+        #    mlab_hosts.append('ndt.iupui.mlab1.iad0%s.measurement-lab.org' %
+        #                      i)
         find_as_paths(mlab_hosts, maxmind_db, outfile)
 
 if __name__ == "__main__":

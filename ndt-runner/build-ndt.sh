@@ -23,7 +23,7 @@ cd ~
 mkdir dashboard/data
 touch dashboard/data/ndt-history.csv
 
-# Run NDT
-# this section can prob. get removed
-# TODO: Add shell command to get the server hostname from mlab-ns instead of hardcoding it
-#./src/web100clt -n ndt.iupui.mlab3.lga05.measurement-lab.org
+# Prepare the Paris Traceroute dataset.
+cd pt-analysis
+python main.py
+cp *.csv ~/dashboard/data/

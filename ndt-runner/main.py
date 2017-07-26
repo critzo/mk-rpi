@@ -49,7 +49,7 @@ def mlab_site_from_ndt_hostname(hostname):
 
 
 def get_ndt_hostname():
-    response_raw = urllib2.urlopen('https://mlab-ns.appspot.com/ndt').read()
+    response_raw = urllib2.urlopen('https://mlab-ns.appspot.com/ndt_ssl').read()
     response = json.loads(response_raw)
     return response['fqdn']
 
@@ -122,8 +122,8 @@ def perform_test_loop(ndt_binary_path, output_path):
             except Exception as ex:
                 logger.error('Error in NDT test: %s', ex)
         sleeptime = random.expovariate(1.0/3600.0)
-        resume_time = datetime.datetime.utcnow() + datetime.timedelta(seconds=sleep_secs)
-        logger.info('Sleeping for %u seconds (until %s)', sleep_secs, format_time(resume_time))
+        resume_time = datetime.datetime.utcnow() + datetime.timedelta(seconds=sleeptime)
+        logger.info('Sleeping for %u seconds (until %s)', sleeptime, format_time(resume_time))
         time.sleep(sleeptime)
 
 def main(args):
