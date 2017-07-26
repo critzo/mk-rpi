@@ -121,11 +121,10 @@ def perform_test_loop(ndt_binary_path, output_path):
                 save_test_result(output_path, ndt_result)
             except Exception as ex:
                 logger.error('Error in NDT test: %s', ex)
-        sleep_hours = random.randint(6, 10)
-        resume_time = datetime.datetime.utcnow() + datetime.timedelta(hours=sleep_hours)
-        logger.info('Sleeping for %u hours (until %s)', sleep_hours, format_time(resume_time))
-        time.sleep(sleep_hours * 60 * 60)
-
+        sleeptime = random.expovariate(1.0/3600.0)
+        resume_time = datetime.datetime.utcnow() + datetime.timedelta(seconds=sleep_secs)
+        logger.info('Sleeping for %u seconds (until %s)', sleep_secs, format_time(resume_time))
+        time.sleep(sleeptime)
 
 def main(args):
     try:

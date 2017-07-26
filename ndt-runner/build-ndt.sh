@@ -1,30 +1,18 @@
-# Get build tools
-
-sudo apt-get update
-sudo apt-get install automake subversion -y
-
-# Build Jansson library
-
-cd ~
-wget http://www.digip.org/jansson/releases/jansson-2.6.tar.gz
-tar -xvf jansson-2.6.tar.gz
-cd jansson-2.6/
-./configure
-make
-
-sudo make install
+# Get build tools and required packages
+apt-get update
+apt-get install -y git automake gcc make libssl-dev libjansson-dev python paris-traceroute screen
 
 # Build NDT and I2util
-
 cd ~
-svn checkout http://ndt.googlecode.com/svn/trunk/ ndt
-cd ndt
-svn checkout http://anonsvn.internet2.edu/svn/I2util/trunk/ I2util
-./bootstrap
-./configure
-make
-cd src
-make web100clt
+git clone --recursive https://github.com/ndt-project/ndt
+cd ndt/I2util && ./bootstrap.sh && ./configure && make && make install
+cd ~/ndt && ./bootstrap && ./configure && make
+cd ~
+
+# Move the NDT Binary (web100clt) to a common location and make a link to it.
+# This enables you to run NDT like any other program on your Pi.
+mv ndt/src/web100clt /opt/web100clt
+ln -s /opt/web100clt /usr/local/bin/web100clt
 
 # Run NDT
 

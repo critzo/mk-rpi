@@ -71,7 +71,7 @@ def main(_):
         mlab_hosts = []
         # HACK: This assumes metro is lga
         for i in range(1, 6):
-            mlab_hosts.append('ndt.iupui.mlab1.lga0%s.measurement-lab.org' %
+            mlab_hosts.append('ndt.iupui.mlab1.iad0%s.measurement-lab.org' %
                               i)
         find_as_paths(mlab_hosts, maxmind_db, outfile)
 
