@@ -62,6 +62,7 @@ def mlab_site_from_ndt_hostname(hostname):
     return hostname.split('.')[3]
 
 def get_ndt_hostnames(max_sites, max_queries):
+    logger = logging.getLogger('tracefinder')
     hostnames = []
     sites_discovered = set()
     queries = 0
