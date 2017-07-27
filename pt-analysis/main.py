@@ -1,6 +1,8 @@
 import argparse
 import csv
 import logging
+import urllib2
+import json
 
 import alexa
 import maxmind
