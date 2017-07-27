@@ -58,10 +58,10 @@ def find_as_paths(hosts, maxmind_db, outfile):
 def get_ndt_hostname():
     response_raw = urllib2.urlopen('https://mlab-ns.appspot.com/ndt_ssl').read()
     response = json.loads(response_raw)
-    return response['fqdn']
+    return response['fqdn'], response['site']
 
-def mlab_site_from_ndt_hostname(hostname):
-    return hostname.split('.')[3]
+#def mlab_site_from_ndt_hostname(hostname):
+#    return hostname.split('.')[3]
 
 def get_ndt_hostnames(max_sites, max_queries):
     logger = logging.getLogger('tracefinder')
@@ -70,8 +70,9 @@ def get_ndt_hostnames(max_sites, max_queries):
     queries = 0
     while (len(sites_discovered) < max_sites) and (queries < max_queries):
       logger.info('query #%u for NDT hosts', queries + 1)
-      ndt_hostname = get_ndt_hostname()
-      mlab_site = mlab_site_from_ndt_hostname(ndt_hostname)
+      ndt_host_info = get_ndt_hostname()
+      ndt_hostname = ndt_host_info[0]
+      mlab_site = ndt_host_info[1]
       if mlab_site not in sites_discovered:
         logger.info('discovered new M-Lab site (%s): %s', mlab_site, ndt_hostname)
         hostnames.append(ndt_hostname)
