@@ -5,7 +5,7 @@ apt-get install -y automake gcc make libssl-dev libjansson-dev python paris-trac
 # Build NDT and I2util
 cd ~/mlab-ndt
 git clone --recursive https://github.com/ndt-project/ndt
-cd ~/mlab-ndt/ndt/I2util ./bootstrap.sh && ./configure && make && make install
+cd ~/mlab-ndt/ndt/I2util && ./bootstrap.sh && ./configure && make && make install
 cd ~/mlab-ndt/ndt && ./bootstrap && ./configure && make
 cd ~/
 
