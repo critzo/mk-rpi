@@ -1,6 +1,6 @@
 # Get build tools and required packages
 apt-get update
-apt-get install -y automake gcc make libssl-dev libjansson-dev python paris-traceroute screen
+apt-get install -y automake gcc make libssl-dev libjansson-dev python python-pip paris-traceroute screen
 
 # Build NDT and I2util
 cd ~/mlab-ndt
