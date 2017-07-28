@@ -1,0 +1,3 @@
+[submodule "ndt"]
+	path = ndt
+	url = git@github.com:ndt-project/ndt.git
