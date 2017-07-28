@@ -18,9 +18,11 @@ ln -s /opt/web100clt /usr/local/bin/web100clt
 cd ~/mlab-ndt/ndt-runner
 pip install pytz tzlocal
 
-# Setup data directories and files
+# Setup data directory and files
 mkdir ~/mlab-ndt/dashboard/data
 touch ~/mlab-ndt/dashboard/data/ndt-history.csv
+touch ~/mlab-ndt/dashboard/data/mlab-pt-paths.csv
+touch ~/mlab-ndt/dashboard/data/alexa-pt-paths.csv
 
 # Prepare the Paris Traceroute dataset.
 cd ~/mlab-ndt/pt-analysis
