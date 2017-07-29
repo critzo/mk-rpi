@@ -21,6 +21,12 @@ The steps below work on a Raspberry Pi B (versions 1 and 2), Raspberry Pi 3, and
 1. Start the web server: `$ ./start-ndt-dashboard.sh`
 1. View results at http://localhost:9000/
 
+## Arch specific notes
+
+### Odroid C1+
+
+* Prior to running `setup.sh`, you must configure the `locales` package to set the default language and character set for the system. Run: `$ sudo dpkg-reconfigure locales`, then select your desired language(s) and set the system locale as well. For the US, we selected `en_US.UTF-8`.
+
 # Hacks to be aware of (and fix)
 
 * In `dashboard/index.html` 
