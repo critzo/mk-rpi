@@ -43,11 +43,6 @@ class NDTResult(object):
         self.download_throughput = download_throughput
 
 
-
-def mlab_site_from_ndt_hostname(hostname):
-    return hostname.split('.')[3]
-
-
 def get_ndt_hostname():
     response_raw = urllib2.urlopen('https://mlab-ns.appspot.com/ndt_ssl').read()
     response = json.loads(response_raw)
