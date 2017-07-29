@@ -23,7 +23,7 @@ pip install pytz tzlocal
 # -- /pt-analysis/main.py ------------> *-pt-paths.csv
 mkdir ~/mlab-ndt/dashboard/data
 touch ~/mlab-ndt/dashboard/data/ndt-history.csv
-touch ~/mlab-ndt/dashboard/data/ndt-nearest-hosts.csv
+touch ~/mlab-ndt/dashboard/data/ndt-closest-hosts.csv
 touch ~/mlab-ndt/dashboard/data/mlab-pt-paths.csv
 touch ~/mlab-ndt/dashboard/data/alexa-pt-paths.csv
 

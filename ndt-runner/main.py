@@ -46,23 +46,32 @@ class NDTResult(object):
 def get_ndt_hostname():
     response_raw = urllib2.urlopen('https://mlab-ns.appspot.com/ndt_ssl').read()
     response = json.loads(response_raw)
-    return response['fqdn'], response['site'], response['country'], response['city']
+    return response['fqdn'], response['site'], response['country'], response['city'], reponse['ip']
 
 
 def get_ndt_hostnames(max_sites, max_queries):
     hostnames = []
     sites_discovered = set()
     queries = 0
+    closest_nodes = open('../dashboard/data/ndt-closest-hosts.csv', 'w')
+    result_writer = csv.writer(closest_nodes)
+
     while (len(sites_discovered) < max_sites) and (queries < max_queries):
       logger.info('query #%u for NDT hosts', queries + 1)
       ndt_host_info = get_ndt_hostname()
       ndt_hostname = ndt_host_info[0]
       mlab_site = ndt_host_info[1]
+      site_country = ndt_host_info[2]
+      site_city = ndt_host_info[3]
+      host_ip = ndt_host_info[4]
       if mlab_site not in sites_discovered:
         logger.info('discovered new M-Lab site (%s): %s', mlab_site, ndt_hostname)
         hostnames.append(ndt_hostname)
         sites_discovered.add(mlab_site)
+        result_writer.writerow([format_time(datetime.datetime.now()),
+                ndt_hostname, mlab_site, site_country, site_city, host_ip])
       queries += 1
+    closest_nodes.close()
     return hostnames
 
 
