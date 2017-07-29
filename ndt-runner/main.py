@@ -51,7 +51,7 @@ def mlab_site_from_ndt_hostname(hostname):
 def get_ndt_hostname():
     response_raw = urllib2.urlopen('https://mlab-ns.appspot.com/ndt_ssl').read()
     response = json.loads(response_raw)
-    return response['fqdn'], response['site']
+    return response['fqdn'], response['site'], response['country'], response['city']
 
 
 def get_ndt_hostnames(max_sites, max_queries):
