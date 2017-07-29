@@ -17,8 +17,3 @@ ln -s /opt/web100clt /usr/local/bin/web100clt
 # Install required python libraries
 cd ~/mlab-ndt/ndt-runner
 pip install pytz tzlocal
-
-# Prepare the Paris Traceroute dataset.
-cd ~/mlab-ndt/pt-analysis
-python main.py
-cp *.csv ~/mlab-ndt/dashboard/data/
