@@ -60,7 +60,10 @@ var margin = {top: 20, right: 20, bottom: 30, left: 50},
 
 var parseDate = d3.time.format('%Y-%m-%dT%H:%M:%S%Z').parse;
 
-var parseMLabSite = function (hostname) { return hostname.split('.')[3]; };
+var parseMLabSite = function (hostname) {
+    mlabsitename = hostname.split('-')[3];
+    return mlabsitename.replace(/.measurement/,'');
+};
 
 var color = d3.scale.category10();
 
