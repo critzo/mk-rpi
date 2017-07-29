@@ -95,10 +95,6 @@ def main(_):
 
     with open('mlab-pt-paths.csv', 'w') as outfile:
         mlab_hosts = get_ndt_hostnames(6, 50)
-        # HACK: This assumes metro is lga
-        #for i in range(1, 6):
-        #    mlab_hosts.append('ndt.iupui.mlab1.iad0%s.measurement-lab.org' %
-        #                      i)
         find_as_paths(mlab_hosts, maxmind_db, outfile)
 
 if __name__ == "__main__":
