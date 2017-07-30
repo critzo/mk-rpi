@@ -54,6 +54,8 @@
 </head>
 <body>
     <script>
+var startDate = '2017-07-29'
+
 var margin = {top: 20, right: 20, bottom: 30, left: 50},
     width = 660 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
@@ -230,9 +232,7 @@ var dailyMapper = function (dataset) {
         var keys = [];
         for (var i = 0; i <= daysToGoBack; i++) {
             var dt = new Date(d.date.getFullYear(), d.date.getMonth(), d.date.getDate() - i);
-            // HACK: Hardcoding 3/22/2015 because that's when collection starts for
-            // my dataset.
-            var minDate = new Date(2015, 2, 22);
+            var minDate = new Date(split(startDate,"-"));
             var maxDate = new Date();
             maxDate.setDate(maxDate.getDate() - daysToGoBack);
             if (dt >= minDate && dt < maxDate) {
