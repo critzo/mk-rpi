@@ -17,7 +17,7 @@ The steps below work on a Raspberry Pi B (versions 1 and 2), Raspberry Pi 3, and
 1. Clone this repo into this folder: `$ cd mlab-ndt && git clone --recursive git@github.com:critzo/ndt-raspi-prototype.git .`
 1. Run _setup.sh_: `$ sudo ./setup.sh` to install required packages, build the NDT C client, and configure the target system.
 1. Start collecting NDT results: `$ ./run-ndt.sh` This opens a `screen` session in the background as a daemon, running NDT randomly against the closest 6 M-Lab servers nearest you.
-1. Build Paris Traceroute dataset: `$ ./run-pt-analysis.sh` - this will take ~?? minutes. Wait until completed befre moving on.
+1. Build Paris Traceroute dataset: `$ screen -d -m ./run-pt-analysis.sh` - this will run in the background in a screen session for about ~3 hours.
 1. Start the web server: `$ ./start-ndt-dashboard.sh`
 1. View results at http://localhost:9000/
 
