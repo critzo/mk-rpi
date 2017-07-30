@@ -19,9 +19,15 @@ The steps below work on a Raspberry Pi B (versions 1 and 2), Raspberry Pi 3, and
 1. Start collecting NDT results: `$ ./run-ndt.sh` This opens a `screen` session in the background as a daemon, running NDT randomly against the closest 6 M-Lab servers nearest you.
 1. Build Paris Traceroute dataset: `$ screen -d -m ./run-pt-analysis.sh` - this will run in the background in a screen session for about ~3 hours.
 1. Start the web server: `$ ./start-ndt-dashboard.sh`
-1. View results at http://localhost:9000/
+1. View your results as they are collected at http://localhost:9000/
 
-## Arch specific notes
+## General Notes
+
+The scripts provided here to run NDT, run the Paris Traceroute analysis and run the web dashboard all use the `screen` application. We advise you to read the screen manual page: `$ man screen`, but also the commands below will be useful to monitor what screen sessions are running:
+
+* `$ screen -list` - lists all running screen sessions and begins with the screen process ID. Example output: `9281..odroid	(07/30/2017 09:47:25 PM)	(Detached)`
+* `$ screen -r 9281` - reattaches you to a specific screen using the screen process ID
+* Press `Ctrl a d` to detatch from a screen session and leave it running in the background
 
 ### Odroid C1+
 
