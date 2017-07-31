@@ -21,5 +21,6 @@ pip install pytz tzlocal
 # Setup data folder and starter files
 mkdir ~/mlab-ndt/dashboard/data
 touch ~/mlab-ndt/dashboard/data/ndt-history.csv
+echo "date,ndt_server,upload_throughput,download_throughput" >> ~/mlab-ndt/dashboard/data/ndt-history.csv
 touch ~/mlab-ndt/dashboard/data/mlab-pt-paths.csv
 touch ~/mlab-ndt/dashboard/data/alexa-pt-paths.csv
