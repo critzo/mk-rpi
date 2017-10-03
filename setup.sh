@@ -15,8 +15,8 @@ mv GeoIP* ~/mlab-pi/test-runner/
 
 # leftover from mtlynch's ndt python wrapper - needed for display?
 # Install required python libraries
-#cd ~/mlab-pi/test-runner
-#pip install pytz tzlocal
+cd ~/mlab-pi/test-runner
+pip install pytz tzlocal
 
 # Setup data folder and starter files
 mkdir ~/mlab-pi/dashboard/data
