@@ -119,10 +119,10 @@ def perform_test_loop(ndt_binary_path, output_path):
         for ndt_hostname in get_ndt_hostnames(6, 50):
             try:
                 ndt_result = do_ndt_test(ndt_binary_path, ndt_hostname)
-                logger.info('%s: %.2f Mbps up, %.2f Mbps down',
-                            ndt_hostname, ndt_result.upload_throughput,
-                            ndt_result.download_throughput)
-                save_test_result(output_path, ndt_result)
+                #logger.info('%s: %.2f Mbps up, %.2f Mbps down',
+                #            ndt_hostname, ndt_result.upload_throughput,
+                #            ndt_result.download_throughput)
+                #save_test_result(output_path, ndt_result)
             except Exception as ex:
                 logger.error('Error in NDT test: %s', ex)
         sleeptime = random.expovariate(1.0/3600.0)

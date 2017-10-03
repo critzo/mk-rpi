@@ -1,26 +1,26 @@
 # Get build tools and required packages
 apt-get update
-apt-get install -y automake gcc make libssl-dev libjansson-dev python python-pip paris-traceroute screen
+apt-get install -y dh-autoreconf autoconf automake libtool gcc make libssl-dev libevent-dev libgeoip-dev python python-pip paris-traceroute screen
 
-# Build NDT and I2util
-cd ~/mlab-ndt
-git clone --recursive https://github.com/ndt-project/ndt
-cd ~/mlab-ndt/ndt/I2util && ./bootstrap.sh && ./configure && make && make install
-cd ~/mlab-ndt/ndt && ./bootstrap && ./configure && make
-cd ~/
+# Build MeasurementKit
+cd ~/measurement-kit
+./autogen.sh
+./configure
+make 
+make install
+ldconfig
 
-# Move the NDT Binary (web100clt) to a common location and make a link to it.
-# This enables you to run NDT like any other program on your Pi.
-mv ~/mlab-ndt/ndt/src/web100clt /opt/web100clt
-ln -s /opt/web100clt /usr/local/bin/web100clt
+# Move the GeoIP files that MeasurementKit needs into a common folder
+mv GeoIP* ~/mlab-pi/test-runner/
 
+# leftover from mtlynch's ndt python wrapper - needed for display?
 # Install required python libraries
-cd ~/mlab-ndt/ndt-runner
-pip install pytz tzlocal
+#cd ~/mlab-pi/test-runner
+#pip install pytz tzlocal
 
 # Setup data folder and starter files
-mkdir ~/mlab-ndt/dashboard/data
-touch ~/mlab-ndt/dashboard/data/ndt-history.csv
+mkdir ~/mlab-pi/dashboard/data
+touch ~/mlab-pi/dashboard/data/ndt-history.csv
 echo "date,ndt_server,upload_throughput,download_throughput" >> ~/mlab-ndt/dashboard/data/ndt-history.csv
-touch ~/mlab-ndt/dashboard/data/mlab-pt-paths.csv
-touch ~/mlab-ndt/dashboard/data/alexa-pt-paths.csv
+touch ~/mlab-pi/dashboard/data/mlab-pt-paths.csv
+touch ~/mlab-pi/dashboard/data/alexa-pt-paths.csv
