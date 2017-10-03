@@ -34,7 +34,7 @@ logger = setup_logger()
 def do_ndt_test():
     result_raw = subprocess.check_output(["measurement_kit", "ndt"])
     #return parse_ndt_result(result_raw.split('\n'), ndt_hostname, datetime.datetime.utcnow())
-    return results_raw
+    return result_raw
 
 def perform_test_loop():
     while True:
