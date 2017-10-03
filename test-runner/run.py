@@ -48,3 +48,4 @@ def perform_test_loop():
         time.sleep(sleeptime)
 
 if __name__ == "__main__":
+    perform_test_loop()
