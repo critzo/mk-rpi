@@ -31,6 +31,12 @@ def setup_logger():
 
 logger = setup_logger()
 
+def format_time(utc_time):
+    utc_time_explicit = utc_time.replace(tzinfo=pytz.utc)
+    localized = utc_time_explicit.astimezone(tzlocal.get_localzone())
+    localized = localized.replace(microsecond=0)
+    return localized.strftime('%Y-%m-%dT%H:%M:%S%z')
+
 def do_ndt_test():
     result_raw = subprocess.check_output(["measurement_kit", "ndt"])
     #return parse_ndt_result(result_raw.split('\n'), ndt_hostname, datetime.datetime.utcnow())
