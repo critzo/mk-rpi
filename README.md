@@ -10,7 +10,7 @@ Also included is a Python wrapper (`test-runner/run.py`) which runs the NDT test
 
 The first thing to do is install the latest Raspbian OS onto your Pi and configure it to your liking. The remainder of this guide assumes you are logged into your Pi locally or over SSH, running as the `pi` user.
 
-* Install the latest [Raspbian OS (Debian 9/Stretch)](https://www.raspberrypi.org/downloads/raspbian/) onto an SD card, insert into your Pi, boot it up, hostname, passwords, etc. to your liking.
+* Install the latest [Raspbian OS (Debian 9/Stretch)](https://www.raspberrypi.org/downloads/raspbian/) onto an SD card, insert into your Pi, boot it up, hostname, passwords, SSH access, etc. to your liking.
 * Run updates: `$ sudo apt update && sudo apt upgrade`
 * Install git: `$ sudo apt install git`
 
@@ -19,8 +19,12 @@ The first thing to do is install the latest Raspbian OS onto your Pi and configu
 * Create a folder to store the files in this repo: `$ mkdir mk-pi && cd mk-pi`
 * Clone this repository: `$ git clone --recursive git@github.com:opentechinstitute/mk-rpi.git .`
 * Run `setup.sh`: `$ sudo ./setup.sh -u pi` to install required packages, build the Measurement Kit program, and configure the target system. **If you choose to run as a different user than `pi`, replace `pi` with your username in the command above.**
-* To test that everything is working, run this from the root folder of this repo on your pi: `$ python test-runner/run.py`. Press Ctrl-C to stop the test runner.
+* To test that everything is working, run this from the root folder of this repo on your pi: `$ python test-runner/run.py`. Press Ctrl-c to stop the test runner.
 * When you're ready to have the test run in the background, use screen: `$ screen -d -m python test-runner/run.py`
+
+## Accessing Test Result Data
+
+Currently test results are saved on the Rpi in the folder where the test is run. If using the defaults outlined above, that is in `/home/pi/mk-pi/`. Test result filename look something like this: `report-ndt-2017-10-03T191408Z-0.njson`
 
 ### Using Screen
 
