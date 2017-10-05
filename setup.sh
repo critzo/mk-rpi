@@ -1,9 +1,8 @@
-while getopts u:f: option
+while getopts u: option
 do
  case "${option}"
  in
  u) USER=${OPTARG};;
- f) =${OPTARG};;
  esac
 done
 
