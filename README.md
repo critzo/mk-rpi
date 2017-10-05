@@ -1,42 +1,37 @@
-# NDT Personal Performance Web Dashboard
+# M-Lab Test Runner
 
-This is project is a prototype for a web application that displays the user's Internet performance over time using the Network Diagnostic Tool from Internet2, hosted by M-Lab.
+This README pertains only to the `mkit` branch and provides and overview of how to setup a Raspberry Pi 3 to serve as an automated M-Lab test runner.
 
-This project consists of three parts:
+A modified setup script (`setup.sh`) configures a newly installed Raspberry Pi and builds [Measurement Kit](https://github.com/measurement-kit/measurement-kit), a C++ library providing multiple M-Lab and non- M-Lab network measurement tests.
 
-* dashboard - The web front end that displays the results in a graphical, organized format
-* ndt-runner - Python wrapper over the NDT C client. Runs as a daemon collecting NDT results to all local M-Lab servers.
-* pt-analysis - Determines the AS paths to the top 500 Alexa sites as well as the AS paths to the nearest M-Lab NDT servers.
+Also included is a Python wrapper (`test-runner/run.py`) which runs the NDT test via Measurement Kit at regular poisson intervals. 
 
-# To Run
+## Installation
 
-The steps below work on a Raspberry Pi B (versions 1 and 2), Raspberry Pi 3, and the Odroid C1+. They should work on any Debian Linux system and will likely work on Ubuntu as well. These instructions assume have already prepared your target system (installed OS, set passwords, security, etc.) and are logged into the system and are in a terminal in your home folder (i.e. '/root/' or '/home/pi').
+* Install the latest Raspbian OS (Debian 9/Stretch) onto an SD card, insert into your Pi, boot it up, configure users, hostname, passwords, etc. to your liking.
+* Run updates: `$ sudo apt update && sudo apt upgrade`
+* Install git: `$ sudo apt install git`
+* Create a folder to store the files in this repo: `$ mkdir mlab-pi`
+* Clone this repository into the folder, selecting the `mkit` branch: `$ git clone --recursive git@github.com:critzo/ndt-raspi-prototype.git -b mkit .`
+* Run `setup.sh`: `$ sudo ./setup.sh` to install required packages, build the Measurement Kit program, and configure the target system.
+* Run `test-runner/run.py` to start automated NDT tests
+  * Tp test that everything is working, run this from the root folder of this repo on your pi: `$ python test-runner/run.py`
+  * To run the test in the background, use screen: `$ screen -d -m python test-runner/run.py`
 
-1. Install git: `$ sudo apt install git`
-1. Create a folder to store the files in this repo: `$ mkdir mlab-pi`
-1. Clone this repo into this folder: `$ cd mlab-pi && git clone --recursive git@github.com:critzo/ndt-raspi-prototype.git .`
-1. Run _setup.sh_: `$ sudo ./setup.sh` to install required packages, build the NDT C client, and configure the target system.
-1. Start collecting NDT results: `$ ./run-ndt.sh` This opens a `screen` session in the background as a daemon, running NDT randomly against the closest 6 M-Lab servers nearest you.
-1. Build Paris Traceroute dataset: `$ screen -d -m ./run-pt-analysis.sh` - this will run in the background in a screen session for about ~3 hours.
-1. Start the web server: `$ ./start-ndt-dashboard.sh`
-1. View your results as they are collected at http://localhost:9000/
-
-## General Notes
-
-The scripts provided here to run NDT, run the Paris Traceroute analysis and run the web dashboard all use the `screen` application. We advise you to read the screen manual page: `$ man screen`, but also the commands below will be useful to monitor what screen sessions are running:
+We advise you to read the screen manual page: `$ man screen`, but also the commands below will be useful to monitor what screen sessions are running:
 
 * `$ screen -list` - lists all running screen sessions and begins with the screen process ID. Example output: `9281..odroid	(07/30/2017 09:47:25 PM)	(Detached)`
 * `$ screen -r 9281` - reattaches you to a specific screen using the screen process ID
 * Press `Ctrl a d` to detatch from a screen session and leave it running in the background
+* When you log back into your Pi, reconnect to a single running screen session using `$ screen -x`
 
-### Odroid C1+
+## TO DO LIST
 
-* Prior to running `setup.sh`, you must configure the `locales` package to set the default language and character set for the system. Run: `$ sudo dpkg-reconfigure locales`, then select your desired language(s) and set the system locale as well. For the US, we selected `en_US.UTF-8`.
+This branch is intended to fully replace the master branch. This will include:
 
-# Hacks to be aware of (and fix)
-
-* In `dashboard/index.html` 
-  * line 235: start date for data collection is hardcoded
-  * lines 100-105: values for the M-Lab servers and their transit providers are hardcoded. 
-
-  Until these are set dynamicall, you will likely want to change these values if you're in a different metro or collecting data from a different date.
+* Replacing the data dashboard with data from Measurement Kit run tests
+* Extending the Paris Traceroute analysis to use a choice of user-provided URLs instead of the Alexa top sites
+* Providing support for additional tests through Measurement Kit
+* Providing support to post test results to a third party collector
+* Providing code and instructions on how to set up a third party collector
+* Extend support to other armhf platforms such as Odroid.
