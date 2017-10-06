@@ -5,7 +5,7 @@ ENV INITSYSTEM on
 
 RUN apt-get update && apt-get install -y git dh-autoreconf autoconf automake libtool gcc make libssl-dev libevent-dev libgeoip-dev python python-pip paris-traceroute screen
 
-RUN git clone --recursive git@github.com:opentechinstitute/mk-rpi.git
+RUN git clone --recursive https://github.com/opentechinstitute/mk-rpi.git
 RUN cd mk-rpi/measurement-kit && ./autogen.sh && ./configure && make && make install && ldconfig
 
 RUN mv GeoIP* ../test-runner/ && cd ../test-runner
