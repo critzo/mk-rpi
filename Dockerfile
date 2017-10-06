@@ -3,7 +3,7 @@ FROM resin/odroid-c1-debian:stretch
 ENV INITSYSTEM on
 # Your code goes here
 
-RUN apt-get update && apt-get install -y git wget dh-autoreconf autoconf automake libtool gcc make libssl-dev libevent-dev libgeoip-dev python python-pip paris-traceroute screen
+RUN apt-get update && apt-get install -y git wget dh-autoreconf autoconf automake libtool gcc-6-base make libssl-dev libevent-dev libgeoip-dev python python-pip paris-traceroute screen
 
 RUN git clone --recursive https://github.com/opentechinstitute/mk-rpi.git
 RUN cd mk-rpi/measurement-kit && ./autogen.sh && ./configure && make && make install && ldconfig
