@@ -1,4 +1,4 @@
-FROM resin/armv7hf-debian:stretch
+FROM resin/rpi-raspbian:stretch
 
 LABEL io.resin.device-type="raspberrypi3"
 
