@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 		usbutils \		
 	&& rm -rf /var/lib/apt/lists/*
 
-RUN apt-get update && apt-get install -y git wget dh-autoreconf autoconf automake libtool gcc make libssl-dev libevent-dev libgeoip-dev python python-pip paris-traceroute screen
+RUN apt-get update && apt-get install -y git wget dh-autoreconf autoconf automake libtool gcc-6 g++-6 make libssl-dev libevent-dev libgeoip-dev python python-pip paris-traceroute screen
 
 RUN git clone --recursive https://github.com/opentechinstitute/mk-rpi.git
 RUN cd mk-rpi/measurement-kit && ./autogen.sh && ./configure && make && make install && ldconfig
