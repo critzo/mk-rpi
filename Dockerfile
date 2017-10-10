@@ -8,4 +8,4 @@ RUN git clone --recursive https://github.com/opentechinstitute/mk-rpi.git
 
 RUN cd mk-rpi/measurement-kit && ./autogen.sh && ./configure && make && make install && ldconfig && mv GeoIP* ../test-runner/ && cd ../test-runner
 
-CMD ["python", "run-tests.py"]
+RUN screen -d -m python run.py
