@@ -2,7 +2,7 @@ FROM resin/raspberrypi3-debian:stretch
 
 LABEL io.resin.device-type="raspberry-pi"
 
-RUN apt-get update && apt-get install -y git wget dh-autoreconf autoconf automake libtool gcc gcc-6 g++-6 libc++-dev make libssl-dev libevent-dev libgeoip-dev python python-pip paris-traceroute screen
+RUN apt-get update && apt-get install -y git wget build-essential dh-autoreconf autoconf automake libtool gcc gcc-6 g++-6 libc++-dev make libssl-dev libevent-dev libgeoip-dev python python-pip paris-traceroute screen
 
 RUN git clone --recursive https://github.com/opentechinstitute/mk-rpi.git
 
