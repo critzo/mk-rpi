@@ -8,6 +8,6 @@ RUN apt-get update && apt-get install -y git wget build-essential dh-autoreconf 
 
 RUN git clone --recursive https://github.com/opentechinstitute/mk-rpi.git
 
-RUN cd mk-rpi/measurement-kit && ./autogen.sh && ./configure && make && make install && ldconfig && mv GeoIP* ../test-runner/ && cd ../test-runner
+RUN cd mk-rpi/measurement-kit && ./autogen.sh && ./configure && make && make install && ldconfig && mv GeoIP* ../test-runner/ && cd ../test-runner && pip install -r requirements.txt
 
-CMD ["screen", "-d -m python run.py"]
+CMD ["python", "run.py"]
