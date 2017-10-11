@@ -1,5 +1,4 @@
 argparse
-csv
 datetime
 json
 logging
