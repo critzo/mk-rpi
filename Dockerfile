@@ -13,7 +13,6 @@ ADD test-runner/requirements.txt /mk-rpi/test-runner/
 RUN cd mk-rpi/measurement-kit && ./autogen.sh && ./configure && make && make install && ldconfig
 RUN mv /mk-rpi/measurement-kit/GeoIP* /mk-rpi/test-runner/
 RUN virtualenv /mk-rpi/test-runner/
-RUN source /mk-rpi/test-runner/bin/activate
 RUN pip install -r /mk-rpi/test-runner/requirements.txt
 
 WORKDIR /mk-rpi/test-runner
