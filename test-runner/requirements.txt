@@ -1,6 +1,4 @@
 argparse
 datetime
-logging
-re
 subprocess
 time
