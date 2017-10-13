@@ -15,7 +15,7 @@ ADD test-runner/* /mk-rpi/test-runner/
 RUN cd mk-rpi/measurement-kit && ./autogen.sh && ./configure && make && make install && ldconfig
 RUN mv /mk-rpi/measurement-kit/GeoIP* /mk-rpi/test-runner/
 
-RUN pip-3 install -r /mk-rpi/test-runner/requirements.txt
+RUN pip3 install -r /mk-rpi/test-runner/requirements.txt
 
 WORKDIR /mk-rpi/test-runner
 CMD ["python", "run.py"]
