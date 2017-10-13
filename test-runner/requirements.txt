@@ -1,7 +1,6 @@
 argparse
 datetime
 logging
-os
 random
 re
 subprocess
