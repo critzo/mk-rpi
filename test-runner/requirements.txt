@@ -1,10 +1,6 @@
 argparse
 datetime
 logging
-random
 re
 subprocess
 time
-urllib2
-pytz
-tzlocal
