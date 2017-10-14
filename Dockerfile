@@ -13,4 +13,4 @@ RUN cd mk-rpi/measurement-kit && ./autogen.sh && ./configure && make && make ins
 RUN mv /mk-rpi/measurement-kit/GeoIP* /mk-rpi/test-runner/
 
 WORKDIR /mk-rpi/test-runner
-CMD ["python", "run.py"]
+CMD ["screen", "-d", "-m", "python", "run.py"]
