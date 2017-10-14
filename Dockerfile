@@ -9,7 +9,7 @@ RUN apt-get install -qy git wget build-essential dh-autoreconf autoconf automake
 
 ADD ./* /mk-rpi/
 
-RUN cd mk-rpi/measurement-kit && ./autogen.sh && ./configure && make && make install && ldconfig
+RUN cd /mk-rpi/measurement-kit && ./autogen.sh && ./configure && make && make install && ldconfig
 RUN mv /mk-rpi/measurement-kit/GeoIP* /mk-rpi/test-runner/
 
 WORKDIR /mk-rpi/test-runner
