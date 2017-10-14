@@ -35,10 +35,10 @@ def format_time(utc_time):
     localized = utc_time_explicit.astimezone(tzlocal.get_localzone())
     localized = localized.replace(microsecond=0)
     return localized.strftime('%Y-%m-%dT%H:%M:%S%z')
-
+    
 def do_ndt_test():
-    result_raw = subprocess.check_output(["measurement_kit", "ndt"])
-    #return parse_ndt_result(result_raw.split('\n'), ndt_hostname, datetime.datetime.utcnow())
+    now = int(subprocess.check_output(["date", "-u", "+%s"]))
+    result_raw = subprocess.check_output(["measurement_kit", "--reportfile=/data/%d.njson"%now, "ndt"])
     return result_raw
 
 def perform_test_loop():
@@ -49,7 +49,7 @@ def perform_test_loop():
             logger.error('Error in NDT test: %s', ex)
         sleeptime = random.expovariate(1.0/3600.0)
         resume_time = datetime.datetime.utcnow() + datetime.timedelta(seconds=sleeptime)
-        logger.info('Sleeping for %u seconds (until %s)', sleeptime, format_time(resume_time))
+        logger.info('Sleeping for %u seconds (until %s)', sleeptime, resume_time)
         time.sleep(sleeptime)
 
 if __name__ == "__main__":
