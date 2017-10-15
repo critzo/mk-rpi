@@ -38,7 +38,9 @@ def format_time(utc_time):
     
 def do_ndt_test():
     now = int(subprocess.check_output(["date", "-u", "+%s"]))
-    result_raw = subprocess.check_output(["measurement_kit", "--reportfile=/data/PROJ_CON_DEVICE_LOCATION--PROJ_CON_SCHOOL--%d.njson"%now, "ndt"])
+    dev_loc = os.environ['PROJ_CON_DEVICE_LOCATION']
+    dev_sch = os.environ['PROJ_CON_SCHOOL']
+    result_raw = subprocess.check_output(["measurement_kit", "--reportfile=/data/"+dev_loc+"--"+dev_sch+"--%d.njson"%now, "ndt"])
     return result_raw
 
 def perform_test_loop():
