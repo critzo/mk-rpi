@@ -1,0 +1,36 @@
+FROM resin/%%RESIN_MACHINE_NAME%%-debian:stretch
+ENV INITSYSTEM on
+
+RUN apt-get update && apt-get install -qy \
+  autoconf \
+  automake \
+  build-essential \
+  dh-autoreconf \
+  dateutils \
+  g++-6 \
+  gcc \
+  gcc-6 \
+  git \
+  libc++-dev \
+  libevent-dev \
+  libgeoip-dev \
+  libtool \
+  libssl-dev 
+  make \
+  paris-traceroute \
+  python \
+  python-crypto \
+  python-dev \
+  python-setuptools \
+  python-tz \
+  python-tzlocal \
+  python-regex \
+  python-urllib3 \
+  wget
+
+RUN git clone --recursive https://github.com/critzo/mk-rpi.git
+RUN cd mk-rpi/measurement-kit && ./autogen.sh && ./configure && make && make install && ldconfig
+RUN mv /mk-rpi/measurement-kit/GeoIP* /mk-rpi/test-runner/
+
+WORKDIR /mk-rpi/test-runner
+CMD ["python", "run.py"]
