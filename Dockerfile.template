@@ -32,8 +32,8 @@ RUN apt-get update && apt-get install -qy \
   wget
 
 # Setup influxdb
-RUN mkdir /data/influxdb 
-COPY files/influxdb/influxdb.conf /etc/influxdb/
+COPY files/influxdb /data/
+RUN mv /data/influxdb/influxdb.conf /etc/influxdb/ 
 RUN openssl req -newkey rsa:2048 -nodes -keyout /data/influxdb/influxdb-selfsigned.key -x509 -days 365 -out /data/influxdb/infuxdb-selfsigned.crt -subj "/C=USA/ST=Washington/L=DC/O=OTI/CN=influxdb" -days 3650
 
 RUN systemctl enable influxdb
