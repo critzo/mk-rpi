@@ -33,7 +33,7 @@ RUN apt-get update && apt-get install -qy \
 
 # Setup influxdb
 COPY files/influxdb /data/
-COPY files/influxdb/influxdb/influxdb.conf /etc/influxdb/
+COPY files/influxdb/influxdb.conf /etc/influxdb/
 WORKDIR /data
 RUN ["chown", "-R", "influxdb:influxdb", "influxdb"]
 RUN systemctl start influxdb
