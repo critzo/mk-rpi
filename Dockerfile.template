@@ -28,9 +28,9 @@ RUN apt-get update && apt-get install -qy \
   python-urllib3 \
   wget
 
-RUN wget https://dl.influxdata.com/influxdb/releases/influxdb-1.3.6_linux_armhf.tar.gz && \
-  tar xvfz influxdb-1.3.6_linux_armhf.tar.gz && \
-  dpkg -i influxdb-1.3.6_linux_armhf.deb
+RUN wget https://dl.influxdata.com/influxdb/releases/influxdb-1.3.6_linux_armhf.tar.gz
+RUN tar xvzf influxdb-1.3.6_linux_armhf.tar.gz 
+RUN dpkg -i influxdb-1.3.6_linux_armhf.deb
 
 # Setup influxdb
 COPY files/influxdb /data/
