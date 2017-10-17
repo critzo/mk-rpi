@@ -11,8 +11,6 @@ RUN apt-get update && apt-get install -qy \
   gcc \
   gcc-6 \
   git \
-  influxdb \
-  influxdb-client \
   libc++-dev \
   libevent-dev \
   libgeoip-dev \
