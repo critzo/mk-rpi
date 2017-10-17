@@ -11,8 +11,6 @@ RUN apt-get update && apt-get install -qy \
   gcc \
   gcc-6 \
   git \
-  grafana \
-  grafana-data \
   influxdb \
   influxdb-client \
   influxdb-dev \
