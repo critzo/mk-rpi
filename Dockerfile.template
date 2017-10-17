@@ -20,7 +20,7 @@ RUN apt-get update && apt-get install -qy \
   libevent-dev \
   libgeoip-dev \
   libtool \
-  libssl-dev 
+  libssl-dev \
   make \
   paris-traceroute \
   python \
