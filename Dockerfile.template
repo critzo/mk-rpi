@@ -33,7 +33,9 @@ RUN apt-get update && apt-get install -qy \
 
 # Setup influxdb
 COPY files/influxdb /data/
-COPY files/influxdb/influxdb* /etc/influxdb/
+COPY files/influxdb/influxdb/influxdb.conf /etc/influxdb/
+WORKDIR /data
+RUN ["chown", "-R", "influxdb:influxdb", "influxdb"]
 RUN systemctl start influxdb
 
 RUN curl -XPOST "http://localhost:8086/query" --data-urlencode "q=CREATE USER $INFLUX_USERNAME WITH PASSWORD '$INFLUX_PASSWORD' WITH ALL PRIVILEGES"
