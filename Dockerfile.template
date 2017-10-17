@@ -33,14 +33,16 @@ RUN apt-get update && apt-get install -qy \
 
 # Setup influxdb
 COPY files/influxdb /data/
-COPY files/influxdb/influxdb.conf /etc/influxdb/ 
-RUN openssl req -newkey rsa:2048 -nodes -keyout /data/influxdb/influxdb-selfsigned.key -x509 -days 365 -out /data/influxdb/infuxdb-selfsigned.crt -subj "/C=USA/ST=Washington/L=DC/O=OTI/CN=influxdb" -days 3650
+COPY files/influxdb/influxdb.conf /etc/influxdb/
+WORKDIR /data/influxdb
+RUN openssl req -newkey rsa:2048 -nodes -keyout influxdb-selfsigned.key -x509 -days 365 -out infuxdb-selfsigned.crt -subj "/C=USA/ST=Washington/L=DC/O=OTI/CN=influxdb" -days 3650
 
 RUN systemctl enable influxdb
 
 RUN curl -XPOST "https://localhost:8086/query" --data-urlencode "q=CREATE USER $INFLUX_USERNAME WITH PASSWORD '$INFLUX_PASSWORD' WITH ALL PRIVILEGES"
 RUN curl -i -XPOST https://localhost:8086/query?u=$INFLUX_USERNAME&p=$INFLUX_PASSWORD --data-urlencode "q=CREATE DATABASE measurementkit"
 
+WORKDIR /
 RUN git clone --recursive https://github.com/critzo/mk-rpi.git
 RUN cd mk-rpi/measurement-kit && ./autogen.sh && ./configure && make && make install && ldconfig
 RUN mv /mk-rpi/measurement-kit/GeoIP* /mk-rpi/test-runner/
