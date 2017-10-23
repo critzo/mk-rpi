@@ -21,6 +21,7 @@ RUN apt-get update && apt-get install -qy \
   python \
   python-crypto \
   python-dev \
+  python-prometheus-client \
   python-setuptools \
   python-tz \
   python-tzlocal \
