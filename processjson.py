@@ -5,8 +5,8 @@ import subprocess
 #from prometheus_client import CollectorRegistry, Gauge, push_to_gateway
 #import prometheus_client.exposition
 
-dev_loc = 'guatemala1' #os.environ['PROJ_CON_DEVICE_LOCATION']
-#dev_sch = os.environ['PROJ_CON_SCHOOL']
+dev_loc = os.environ['PROJ_CON_DEVICE_LOCATION']
+dev_sch = os.environ['PROJ_CON_SCHOOL']
 #pushgw = os.environ['PUSHGW_SERVER']
 #pushgw_user = os.environ['PUSHGW_USERNAME']
 #pushgw_pass = os.environ['PUSHGW_PASS']

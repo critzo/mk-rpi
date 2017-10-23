@@ -44,6 +44,7 @@ def do_ndt_test():
 
     with open('/data/'+dev_loc+'--'+dev_sch+--'%d.njson'%now) as data_file:
         data = json.load(data_file)
+        
     cmd = """cat <<EOF | curl -k --data-binary @- https://104.154.133.198/metrics/job/"""+dev_loc+"""
     # TYPE download gauge
     download{label="Download Speed"} """+str(data['test_keys']['simple']['download'])+"""

@@ -29,18 +29,6 @@ RUN apt-get update && apt-get install -qy \
   python-urllib3 \
   wget
 
-# Setup influxdb
-COPY files/influxdb /data/
-COPY files/influxdb/influxdb.conf /etc/influxdb/
-
-# RUN curl -XPOST http://localhost:8086/query --data-urlencode "q=CREATE USER $INFLUX_USERNAME WITH PASSWORD '$INFLUX_PASSWORD' WITH ALL PRIVILEGES"
-
-# RUN curl -i -XPOST http://localhost:8086/query?u=$INFLUX_USERNAME&p=$INFLUX_PASSWORD --data-urlencode "q=CREATE DATABASE measurementkit"
-
-# Install influxdb
-RUN wget -O /tmp/influxdb.deb https://dl.influxdata.com/influxdb/releases/influxdb_0.13.0_armhf.deb && \
-    dpkg -i /tmp/influxdb.deb && rm /tmp/influxdb.deb
-
 RUN git clone --recursive https://github.com/critzo/mk-rpi.git
 RUN cd mk-rpi/measurement-kit && ./autogen.sh && ./configure && make && make install && ldconfig
 RUN mv /mk-rpi/measurement-kit/GeoIP* /mk-rpi/test-runner/
