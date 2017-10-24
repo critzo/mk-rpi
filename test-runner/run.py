@@ -40,32 +40,44 @@ def do_ndt_test():
     now = int(subprocess.check_output(["date", "-u", "+%s"]))
     dev_loc = os.environ['PROJ_CON_DEVICE_LOCATION']
     dev_sch = os.environ['PROJ_CON_SCHOOL']
-    result_raw = subprocess.check_output(["measurement_kit", "--reportfile=/data/"+dev_loc+"--"+dev_sch+"--%d.njson"%now, "ndt"])
+    reportfile = "%s--%s--%d.njson" % (dev_loc, dev_sch, now)
+    flags = "--reportfile=/data/%s" % reportfile
+    result_raw = subprocess.check_output(["measurement_kit", flags, "ndt"])
 
-    with open('/data/'+dev_loc+'--'+dev_sch+--'%d.njson'%now) as data_file:
+    with open('/data/%s' % reportfile) as data_file:
         data = json.load(data_file)
 
-    cmd = """cat <<EOF | curl -k --data-binary @- https://104.154.133.198/metrics/job/"""+dev_loc
-    + """# TYPE download gauge
-    download{label="Download Speed"} """+str(data['test_keys']['simple']['download'])
-    +"""# TYPE upload gauge
-    upload{label="Upload Speed"} """+str(data['test_keys']['simple']['upload'])
-    +"""# TYPE ping gauge
-    ping{label="Ping Test"} """+str(data['test_keys']['simple']['ping'])
-    +"""# TYPE min_rtt gauge
-    min_rtt{label="Minimum Round Trip Time"} """+str(data['test_keys']['advanced']['min_rtt'])
-    +"""# TYPE max_rtt gauge
-    max_rtt{label="Maximum Round Trip Time"} """+str(data['test_keys']['advanced']['max_rtt'])
-    +"""# TYPE avg_rtt gauge
-    avg_rtt{label="Average Round Trip Time"} """+str(data['test_keys']['advanced']['avg_rtt'])
-    +"""# TYPE cong_lim gauge
-    cong_lim{label="Congestion Limited Ratio"} """+str(data['test_keys']['advanced']['congestion_limited'])
-    +"""# TYPE recv_lim gauge
-    recv_lim{label="Receiver Limited Ratio"} """+str(data['test_keys']['advanced']['receiver_limited'])
-    +"""# TYPE send_lim gauge
-    send_lim{label="Sender Limited Ratio"} """+str(data['test_keys']['advanced']['sender_limited'])
-    +"""EOF"""
-
+    cmd = """cat <<EOF | curl -k --data-binary @- https://104.154.133.198/metrics/job/%s
+# TYPE download gauge
+download{label="Download Speed"} %s
+# TYPE upload gauge
+upload{label="Upload Speed"} %s
+# TYPE ping gauge
+ping{label="Ping Test"} %s
+# TYPE min_rtt gauge
+min_rtt{label="Minimum Round Trip Time"} %s
+# TYPE max_rtt gauge
+max_rtt{label="Maximum Round Trip Time"} %s
+# TYPE avg_rtt gauge
+avg_rtt{label="Average Round Trip Time"} %s
+# TYPE cong_lim gauge
+cong_lim{label="Congestion Limited Ratio"} %s
+# TYPE recv_lim gauge
+recv_lim{label="Receiver Limited Ratio"} %s
+# TYPE send_lim gauge
+send_lim{label="Sender Limited Ratio"} %s
+EOF""" % (
+    dev_loc,
+    str(data['test_keys']['simple']['download']),
+    str(data['test_keys']['simple']['upload']),
+    str(data['test_keys']['simple']['ping']),
+    str(data['test_keys']['advanced']['min_rtt']),
+    str(data['test_keys']['advanced']['max_rtt']),
+    str(data['test_keys']['advanced']['avg_rtt']),
+    str(data['test_keys']['advanced']['congestion_limited']),
+    str(data['test_keys']['advanced']['receiver_limited']),
+    str(data['test_keys']['advanced']['sender_limited'])
+    )
     subprocess.check_output(cmd, shell=True)
 
     return result_raw
