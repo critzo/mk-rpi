@@ -29,8 +29,12 @@ RUN apt-get update && apt-get install -qy \
   python-urllib3 \
   wget
 
+ENV COMMIT=2d2ded92a6d20830cce4701f1340da230a15ef4f
 RUN git clone --recursive https://github.com/critzo/mk-rpi.git
-RUN cd mk-rpi/measurement-kit && ./autogen.sh && ./configure && make && make install && ldconfig
+WORKDIR /mk-rpi
+RUN git checkout -q $COMMIT
+WORKDIR /mk-rpi/measurement-kit
+RUN ./autogen.sh && ./configure && make && make install && ldconfig
 RUN mv /mk-rpi/measurement-kit/GeoIP* /mk-rpi/test-runner/
 
 WORKDIR /mk-rpi/test-runner
