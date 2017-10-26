@@ -29,7 +29,7 @@ RUN apt-get update && apt-get install -qy \
   python-urllib3 \
   wget
 
-ENV COMMIT=2d2ded92a6d20830cce4701f1340da230a15ef4f
+ENV COMMIT=990e65c1c3a1a162e39d53895fac83bed5872c9c
 RUN git clone --recursive https://github.com/critzo/mk-rpi.git
 WORKDIR /mk-rpi
 RUN git checkout -q $COMMIT
