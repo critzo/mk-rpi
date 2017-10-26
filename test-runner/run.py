@@ -40,6 +40,7 @@ def do_ndt_test():
     now = int(subprocess.check_output(["date", "-u", "+%s"]))
     dev_loc = os.environ['PROJ_CON_DEVICE_LOCATION']
     dev_sch = os.environ['PROJ_CON_SCHOOL']
+    pushgw = os.environ['PUSHGW_SERVER']
     reportfile = "%s--%s--%d.njson" % (dev_loc, dev_sch, now)
     flags = "--reportfile=/data/%s" % reportfile
     result_raw = subprocess.check_output(["measurement_kit", flags, "ndt"])
@@ -47,7 +48,7 @@ def do_ndt_test():
     with open('/data/%s' % reportfile) as data_file:
         data = json.load(data_file)
 
-    cmd = """cat <<EOF | curl -k --data-binary @- https://104.154.133.198/metrics/job/%s
+    cmd = """cat <<EOF | curl -k --data-binary @- https://%s/metrics/job/%s
 # TYPE download gauge
 download{label="Download Speed"} %s
 # TYPE upload gauge
@@ -67,6 +68,7 @@ recv_lim{label="Receiver Limited Ratio"} %s
 # TYPE send_lim gauge
 send_lim{label="Sender Limited Ratio"} %s
 EOF""" % (
+    str(pushgw),
     dev_loc,
     str(data['test_keys']['simple']['download']),
     str(data['test_keys']['simple']['upload']),
