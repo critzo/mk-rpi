@@ -142,20 +142,12 @@ test_keys_summary_data__test_c2s__connect_times{label="test_c2s__connect_times"}
 test_keys_summary_data__test_c2s__params__num_streams{label="test_c2s__params__num_streams"} %s
 # TYPE test_keys_test_c2s__receiver_data__avg_speed gauge
 test_keys_summary_data__test_c2s__receiver_data__avg_speed{label="test_c2s__receiver_data__avg_speed"} %s
-
-# TYPE test_keys_test_c2s__sender_data_# gauge
-test_keys_summary_data__sender_data{label="test_c2s__sender_data"} %s
-
 # TYPE test_keys_test_s2c__connect_times gauge
 test_keys_summary_data__test_s2c__connect_times{label="test_s2c__connect_times"} %s
 # TYPE test_keys_test_s2c__params__num_streams gauge
 test_keys_summary_data__test_s2c__params__num_streams{label="test_s2c__params__num_streams"} %s
 # TYPE test_keys_test_s2c__params__snaps_delay gauge
 test_keys_summary_data__test_s2c__params__snaps_delay{label="test_s2c__params__snaps_delay"} %s
-
-# TYPE test_keys_test_s2c__receiver_data__# gauge
-test_keys_summary_data__test_s2c__receiver_data__#{label="test_s2c__receiver_data__#"} %s
-
 # TYPE test_keys_test_s2c__receiver_data__web100_data__AckPktsIn gauge
 test_keys_summary_data__test_s2c__receiver_data__web100_data__AckPktsIn{label="test_s2c__receiver_data__web100_data__AckPktsIn"} %s
 # TYPE test_keys_test_s2c__receiver_data__web100_data__AckPktsOut gauge
@@ -289,6 +281,13 @@ test_keys_summary_data__test_s2c__receiver_data__web100_data__X_Rcvbuf{label="te
 # TYPE test_keys_test_s2c__receiver_data__web100_data__X_Sndbuf gauge
 test_keys_summary_data__test_s2c__receiver_data__web100_data__X_Sndbuf{label="test_s2c__receiver_data__web100_data__X_Sndbuf"} %s
 EOF""" % (
+
+# TYPE test_keys_test_c2s__sender_data_# gauge
+# test_keys_summary_data__sender_data{label="test_c2s__sender_data"} %s
+
+# TYPE test_keys_test_s2c__receiver_data__# gauge
+#test_keys_summary_data__test_s2c__receiver_data__#{label="test_s2c__receiver_data__#"} %s
+
     str(pushgw),
     dev_loc,
     str(data['test_keys']['advanced']['avg_rtt']),
@@ -409,7 +408,7 @@ EOF""" % (
     str(data['test_keys']['summary_data']['test_s2c']['receiver_data']['web100_data']['WinScaleRcvd']),
     str(data['test_keys']['summary_data']['test_s2c']['receiver_data']['web100_data']['WinScaleSent']),
     str(data['test_keys']['summary_data']['test_s2c']['receiver_data']['web100_data']['X_Rcvbuf']),
-    str(data['test_keys']['summary_data']['test_s2c']['receiver_data']['web100_data']['X_Sndbuf']),
+    str(data['test_keys']['summary_data']['test_s2c']['receiver_data']['web100_data']['X_Sndbuf'])
     )
     subprocess.check_output(cmd, shell=True)
 
