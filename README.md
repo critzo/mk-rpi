@@ -6,6 +6,21 @@ Currently, `mk-rpi` supports all tests provided by [Measurement Kit](https://git
 
 `mk-rpi` is intended to support both individual devices, setup and run by home users, as well as a means of automating many devices for broader research use. The sections below detail _single device setup_ and _device fleet setup_.
 
+## Repository Structure
+
+|| File/Folder                 || Description ||
+| Dockerfile.template          | Dockerfile used for Resin.io device fleet deployment |
+| LICENSE.md                   |  |
+| @measurement-kit             | Measurement Kit git sub-module. |
+| README.md                    |  |
+| sample-data                  | Sample data output | 
+│   └── ndt-sample-output.txt  |  |
+| setup.sh                     | Setup script for single devices |
+| test-runner                  |  |
+│   ├── run.py                 | Test wrapper for Resin.io device fleet |
+│   └── run-single.py          | Test wrapper for single devices |
+| WIP                          | Work in progress code. |
+
 ## Single Device Setup
 
 To setup and run `mk-rpi` on a single device, we provide a setup script (`setup.sh`) to configure a newly installed Raspberry Pi 3. Other platforms such as Odroid, or better resourced computers will likely also work provided they are running Debian 9/Stretch. We have tested single device setup with the Rpi3 thus far.
@@ -45,7 +60,9 @@ We advise you to read the screen manual page: `$ man screen`, but also the comma
 
 ### Device Setup and Management
 
-To support and manage multiple measurement devices in the field for specific research projects, we’re using [Resin.io](https://resin.io), which allows us to build our code into a Docker container and push it to a fleet of devices. A "Resin Application” is setup for each type of device architecture. Each application provides a Git remote URL. So far we’ve tested two applications, one for a Raspberry Pi 3 and another for an Odroid C1/C1+. When our code is pushed to the Git remote for Rpi3's a container is built and pushed to our Rpi3 devices. Likewise for the Odroid application's Git remote. Read more about using Resin.io generally in our [blog post](https://opentechinstitute.github.io/2017/10/deploying-and-managing-a-fleet-of-measurement-kit-devices/).
+To support and manage multiple measurement devices in the field for specific research projects, we’re using [Resin.io](https://resin.io), which allows us to build our code into a Docker container and push it to a fleet of devices. A "Resin Application” is setup for each type of device architecture. Each application provides a Git remote URL. The file `Dockerfile.template` is used by Resin to build and deploy code to multiple device architectures. This file is not used when using `mk-rpi` on a single device as described above. So far we’ve tested two applications, one for a Raspberry Pi 3 and another for an Odroid C1/C1+. When our code is pushed to the Git remote for Rpi3's a container is built and pushed to our Rpi3 devices. Likewise for the Odroid application's Git remote. 
+
+Read more about using Resin.io generally in our [blog post](https://opentechinstitute.github.io/2017/10/deploying-and-managing-a-fleet-of-measurement-kit-devices/).
 
 ### Data Collection Server and Visualization
 
