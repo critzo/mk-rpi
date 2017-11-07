@@ -15,11 +15,11 @@ Currently, `mk-rpi` supports all tests provided by [Measurement Kit](https://git
 | @measurement-kit             | Measurement Kit git sub-module. |
 | README.md                    |  |
 | sample-data                  | Sample data output | 
-│   └── ndt-sample-output.txt  |  |
+|   └── ndt-sample-output.txt  |  |
 | setup.sh                     | Setup script for single devices |
 | test-runner                  |  |
-│   ├── run.py                 | Test wrapper for Resin.io device fleet |
-│   └── run-single.py          | Test wrapper for single devices |
+|   ├── run.py                 | Test wrapper for Resin.io device fleet |
+|   └── run-single.py          | Test wrapper for single devices |
 | WIP                          | Work in progress code. |
 
 ## Single Device Setup
