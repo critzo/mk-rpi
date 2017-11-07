@@ -9,6 +9,7 @@ Currently, `mk-rpi` supports all tests provided by [Measurement Kit](https://git
 ## Repository Structure
 
 || File/Folder                 || Description ||
+|------------------------------|---------------|
 | Dockerfile.template          | Dockerfile used for Resin.io device fleet deployment |
 | LICENSE.md                   |  |
 | @measurement-kit             | Measurement Kit git sub-module. |
