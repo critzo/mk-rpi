@@ -38,6 +38,7 @@ ENV COMMIT=990e65c1c3a1a162e39d53895fac83bed5872c9c
 RUN git clone --recursive https://github.com/critzo/mk-rpi.git
 WORKDIR /mk-rpi
 RUN git checkout -q $COMMIT
+RUN COPY *.dat measurement-kit/
 WORKDIR /mk-rpi/measurement-kit
 RUN ./autogen.sh && ./configure && make && make install && ldconfig
 RUN mv /mk-rpi/measurement-kit/GeoIP* /mk-rpi/test-runner/
