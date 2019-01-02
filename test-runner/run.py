@@ -38,8 +38,8 @@ def format_time(utc_time):
     
 def do_ndt_test():
     now = int(subprocess.check_output(["date", "-u", "+%s"]))
-    dev_loc = os.environ['PROJ_CON_DEVICE_LOCATION']
-    dev_sch = os.environ['PROJ_CON_SCHOOL']
+    dev_loc = os.environ['DEVICE_LOC']
+    dev_sch = os.environ['CONNECTION_LOC']
     pushgw = os.environ['PUSHGW_SERVER']
     reportfile = "%s--%s--%d.njson" % (dev_loc, dev_sch, now)
     flags = "--reportfile=/data/%s" % reportfile
