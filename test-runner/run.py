@@ -289,7 +289,7 @@ EOF""" % (
 #test_keys_summary_data__test_s2c__receiver_data__#{label="test_s2c__receiver_data__#"} %s
 
     str(pushgw),
-    dev_loc,
+    device_loc,
     str(data['test_keys']['advanced']['avg_rtt']),
     str(data['test_keys']['advanced']['congestion_limited']),
     str(data['test_keys']['advanced']['fast_retran']),
