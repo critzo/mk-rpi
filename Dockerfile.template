@@ -36,7 +36,7 @@ WORKDIR /speedtest-cli
 RUN python setup.py install
 WORKDIR /
 
-ENV COMMIT=990e65c1c3a1a162e39d53895fac83bed5872c9c
+ENV COMMIT=887b0b1c40001201c6f3b49a9574600485fae412
 RUN git clone --recursive https://github.com/critzo/mk-rpi.git
 WORKDIR /mk-rpi
 RUN git checkout -q $COMMIT
