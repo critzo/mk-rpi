@@ -10,6 +10,7 @@ RUN install_packages \
   gcc-6 \
   git \
   libc++-dev \
+  libcurl4-openssl-dev \
   libevent-dev \
   libgeoip-dev \
   libmaxminddb-dev \
