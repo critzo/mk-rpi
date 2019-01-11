@@ -32,6 +32,7 @@ RUN install_packages \
 RUN git clone https://github.com/critzo/mk-rpi.git
 RUN git clone https://github.com/measurement-kit/measurement-kit.git --branch v0.9.1
 WORKDIR /measurement-kit
+RUN chmod +x autogen.sh
 RUN autogen.sh
 RUN configure --disable-shared
 RUN make
