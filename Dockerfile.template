@@ -11,16 +11,13 @@ RUN install_packages \
   git \
   libc++-dev \
   libevent-dev \
-  libmaxminddb0 \
-  libmaxminddb-dev \
+  libgeoip-dev \
   libtool \
   libssl-dev \
   make \
-  paris-traceroute \
   python \
   python-crypto \
   python-dev \
-  python-prometheus-client \
   python-setuptools \
   python-tz \
   python-tzlocal \
@@ -42,7 +39,6 @@ RUN chmod +x speedtest-cli
 FROM balenalib/%%BALENA_ARCH%%-debian:stretch
 RUN install_packages \
   dateutils \
-  geoip \
   libevent-dev \
   libgeoip-dev \
   libtool \
