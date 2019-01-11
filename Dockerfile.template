@@ -33,7 +33,8 @@ RUN chmod +x autogen.sh
 RUN ./autogen.sh
 RUN ./configure
 RUN make
-RUN mv /mk-rpi/measurement-kit/GeoIP* /mk-rpi/test-runner/
+WORKDIR /
+RUN mv /measurement-kit/GeoIP* /mk-rpi/test-runner/
 WORKDIR /mk-rpi/test-runner
 RUN wget -O speedtest-cli https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py
 RUN chmod +x speedtest-cli
