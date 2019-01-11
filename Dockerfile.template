@@ -8,8 +8,9 @@ RUN install_packages \
   g++-6 \
   gcc \
   gcc-6 \
-  geoip \
-  geoip-dev \
+  geoip-bin \
+  libgeoip-dev \
+  geoip-database-extra \
   git \
   libc++-dev \
   libevent-dev \
