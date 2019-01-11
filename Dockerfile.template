@@ -34,8 +34,8 @@ RUN git clone https://github.com/measurement-kit/measurement-kit.git --branch v0
 WORKDIR /measurement-kit
 RUN chmod +x autogen.sh
 RUN ./autogen.sh
-RUN configure --disable-shared
-RUN make
+RUN ./configure --disable-shared
+RUN ./make
 RUN mv /mk-rpi/measurement-kit/GeoIP* /mk-rpi/test-runner/
 WORKDIR /mk-rpi/test-runner
 RUN wget -O speedtest-cli https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py
