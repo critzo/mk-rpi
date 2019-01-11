@@ -12,6 +12,7 @@ RUN install_packages \
   libc++-dev \
   libevent-dev \
   libgeoip-dev \
+  libmaxminddb-dev \
   libtool \
   libssl-dev \
   make \
