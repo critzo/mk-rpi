@@ -1,4 +1,4 @@
-FROM balenalib/%%BALENA_ARCH%%-debian:stretch -build AS build-mk
+FROM balenalib/%%BALENA_ARCH%%-debian:stretch-build AS build-mk
 RUN install_packages \
   autoconf \
   automake \
