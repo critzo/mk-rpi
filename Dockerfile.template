@@ -8,13 +8,11 @@ RUN install_packages \
   g++-6 \
   gcc \
   gcc-6 \
-  geoip-bin \
-  libgeoip-dev \
-  geoip-database-extra \
   git \
   libc++-dev \
   libevent-dev \
-  libgeoip-dev \
+  libmaxminddb0 \
+  libmaxminddb-dev \
   libtool \
   libssl-dev \
   make \
