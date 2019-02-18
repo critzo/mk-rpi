@@ -36,7 +36,7 @@ def format_time(utc_time):
     localized = localized.replace(microsecond=0)
     return localized.strftime('%Y-%m-%dT%H:%M:%S%z')
     
-def do_ndt_test():
+def run_ndt_test():
     now = int(subprocess.check_output(["date", "-u", "+%s"]))
     site = os.environ['SITE']
     test = 'ndt'
@@ -45,6 +45,21 @@ def do_ndt_test():
     reportfile = "%s-%s-%s-%s-%d.njson" % (site, test, device_loc, connection_loc, now)
     flags = "--reportfile=/data/%s" % reportfile
     result_raw = subprocess.check_output(["measurement_kit", flags, "ndt"])
+
+    with open('/data/%s' % reportfile) as data_file:
+        data = json.load(data_file)
+
+    return result_raw
+
+def run_dash_test():
+    now = int(subprocess.check_output(["date", "-u", "+%s"]))
+    site = os.environ['SITE']
+    test = 'ndt'
+    device_loc = os.environ['DEVICE_LOC']
+    connection_loc = os.environ['CONNECTION_LOC']
+    reportfile = "%s-%s-%s-%s-%d.njson" % (site, test, device_loc, connection_loc, now)
+    flags = "--reportfile=/data/%s" % reportfile
+    result_raw = subprocess.check_output(["measurement_kit", flags, "dash"])
 
     with open('/data/%s' % reportfile) as data_file:
         data = json.load(data_file)
@@ -60,17 +75,19 @@ def run_speedtest_test():
     reportfile = "%s-%s-%s-%s-%d.njson" % (site, test, device_loc, connection_loc, now)
     flags = "--secure --json > /data/%s" % reportfile
     result_raw = subprocess.check_output(["speedtest", flags])
+    with open('/data/%s' % reportfile) as data_file:
+    data = json.load(data_file)
+
+    return result_raw
 
 def perform_test_loop():
     while True:
         try:
-            ndt_result = do_ndt_test()
-        except Exception as ex:
-            logger.error('Error in NDT test: %s', ex)
-        try:
+            ndt_result = run_ndt_test()
             speedtest_result = run_speedtest_test()
-        except Exception as ex1:
-            logger.error('Error in speedtest-cli test: %s', ex1)
+            dash_result = run_dash_test()
+        except Exception as ex:
+            logger.error('Test Error test: %s', ex)
 
         sleeptime = random.expovariate(1.0/3600.0)
         resume_time = datetime.datetime.utcnow() + datetime.timedelta(seconds=sleeptime)
