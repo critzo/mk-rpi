@@ -1,5 +1,7 @@
-FROM balenalib/%%BALENA_ARCH%%-debian:stretch AS build-mk
-RUN install_packages \
+FROM resin/%%RESIN_MACHINE_NAME%%-debian:stretch
+ENV INITSYSTEM on
+
+RUN apt-get update && apt-get install -qy \
   autoconf \
   automake \
   build-essential \
@@ -10,52 +12,34 @@ RUN install_packages \
   gcc-6 \
   git \
   libc++-dev \
-  libcurl4-openssl-dev \
   libevent-dev \
   libgeoip-dev \
-  libmaxminddb-dev \
   libtool \
   libssl-dev \
   make \
+  paris-traceroute \
   python \
   python-crypto \
   python-dev \
+  python-prometheus-client \
   python-setuptools \
   python-tz \
   python-tzlocal \
   python-regex \
   python-urllib3 \
   wget
-RUN git clone https://github.com/critzo/mk-rpi.git
-RUN git clone https://github.com/measurement-kit/measurement-kit.git --branch v0.9.1
-WORKDIR /measurement-kit
-RUN chmod +x autogen.sh
-RUN ./autogen.sh
-RUN ./configure
-RUN make
+
+RUN git clone https://github.com/sivel/speedtest-cli.git
+WORKDIR /speedtest-cli
+RUN python setup.py install
 WORKDIR /
-RUN mv /measurement-kit/GeoIP* /mk-rpi/test-runner/
+
+RUN git clone --recursive https://github.com/critzo/mk-rpi.git
+WORKDIR /mk-rpi
+RUN cp WIP/*.dat measurement-kit/
+WORKDIR /mk-rpi/measurement-kit
+RUN ./autogen.sh && ./configure && make && make install && ldconfig
+RUN mv /mk-rpi/measurement-kit/GeoIP* /mk-rpi/test-runner/
+
 WORKDIR /mk-rpi/test-runner
-RUN wget -O speedtest-cli https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py
-RUN chmod +x speedtest-cli
-
-FROM balenalib/%%BALENA_ARCH%%-debian:stretch
-RUN install_packages \
-  dateutils \
-  libevent-dev \
-  libgeoip-dev \
-  libtool \
-  libssl-dev \
-  paris-traceroute \
-  python \
-  python-crypto \
-  python-dev \
-  python-tz \
-  python-tzlocal \
-  python-regex \
-  python-urllib3 
-
-COPY --from=build-mk /mk-rpi/test-runner/ ./
-
-ENV INITSYSTEM on
 CMD ["python", "run.py"]
