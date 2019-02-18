@@ -75,8 +75,9 @@ def run_speedtest_test():
     reportfile = "%s-%s-%s-%s-%d.json" % (site, test, device_loc, connection_loc, now)
     flags = "--secure --json > /data/%s" % reportfile
     result_raw = subprocess.check_output(["speedtest", flags], shell=True)
+
     with open('/data/%s' % reportfile) as data_file:
-    data = json.load(data_file)
+        data = json.load(data_file)
 
     return result_raw
 
