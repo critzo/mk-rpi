@@ -67,26 +67,26 @@ def run_dash_test():
     return result_raw
 
 def run_speedtest_test():
-    now = int(subprocess.check_output(["date", "-u", "+%s"]))
-    site = os.environ['SITE']
     test = 'speedtest'
-    device_loc = os.environ['DEVICE_LOC']
-    connection_loc = os.environ['CONNECTION_LOC']
     reportfile = "%s-%s-%s-%s-%d.json" % (site, test, device_loc, connection_loc, now)
     flags = "--secure --json > /data/%s" % reportfile
-    result_raw = subprocess.check_output(["speedtest", flags], shell=True)
+    result_raw = subprocess.check_output(["speedtest-cli", flags])
 
     with open('/data/%s' % reportfile) as data_file:
-        data = json.load(data_file)
+        data_file.write(result_raw)
 
     return result_raw
 
 def perform_test_loop():
+    now = int(subprocess.check_output(["date", "-u", "+%s"]))
+    site = os.environ['SITE']
+    device_loc = os.environ['DEVICE_LOC']
+    connection_loc = os.environ['CONNECTION_LOC']
     while True:
         try:
             ndt_result = run_ndt_test()
-            speedtest_result = run_speedtest_test()
             dash_result = run_dash_test()
+            speedtest_result = run_speedtest_test()
         except Exception as ex:
             logger.error('Test Error test: %s', ex)
 

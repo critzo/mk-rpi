@@ -27,12 +27,8 @@ RUN apt-get update && apt-get install -qy \
   python-tzlocal \
   python-regex \
   python-urllib3 \
+  speedtest-cli \
   wget
-
-RUN git clone https://github.com/sivel/speedtest-cli.git
-WORKDIR /speedtest-cli
-RUN python setup.py install
-WORKDIR /
 
 RUN git clone --recursive https://github.com/critzo/mk-rpi.git
 WORKDIR /mk-rpi
