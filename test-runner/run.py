@@ -54,7 +54,7 @@ def run_ndt_test():
 def run_dash_test():
     now = int(subprocess.check_output(["date", "-u", "+%s"]))
     site = os.environ['SITE']
-    test = 'ndt'
+    test = 'dash'
     device_loc = os.environ['DEVICE_LOC']
     connection_loc = os.environ['CONNECTION_LOC']
     reportfile = "%s-%s-%s-%s-%d.njson" % (site, test, device_loc, connection_loc, now)
