@@ -2,3 +2,6 @@
 	path = measurement-kit
 	url = https://github.com/measurement-kit/measurement-kit
 	branch = master
+[submodule "pusher"]
+	path = pusher
+	url = https://github.com/m-lab/pusher
