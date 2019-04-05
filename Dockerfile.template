@@ -44,6 +44,7 @@ WORKDIR /mk-rpi
 RUN git clone --recursive https://github.com/measurement-kit/libndt.git
 WORKDIR /mk-rpi/libndt
 RUN wget https://github.com/nlohmann/json/raw/develop/single_include/nlohmann/json.hpp
+RUN g++ -std=c++11 -Wall -Wextra -I. -o main main.cpp .
 RUN cmake .
 RUN cmake --build .
 
