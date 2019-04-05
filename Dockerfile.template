@@ -40,12 +40,13 @@ RUN sed -i 's/DEFAULT@SECLEVEL=2/DEFAULT@SECLEVEL=1/g' /etc/ssl/openssl.cnf
 RUN sed -i 's/MinProtocol = TLSv1.2/MinProtocol = TLSv1.0/g' \
     /etc/ssl/openssl.cnf
 RUN git clone https://github.com/critzo/mk-rpi.git
-WORKDIR /mk-rpi/test-runner
+WORKDIR /mk-rpi
 RUN git clone --recursive https://github.com/measurement-kit/libndt.git
-WORKDIR /libndt
+WORKDIR /mk-rpi/libndt
 RUN wget https://github.com/nlohmann/json/blob/develop/single_include/nlohmann/json.hpp
 RUN wget https://github.com/measurement-kit/libndt/blob/master/libndt.hpp
 RUN cmake .
 RUN cmake --build .
 
+WORKDIR /mk-rpi/test-runner
 CMD ["python", "run.py"]
