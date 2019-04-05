@@ -25,9 +25,9 @@ RUN apt-get update && apt-get install -qy \
   python-tzlocal \
   python-regex \
   python-urllib3 \
-  speedtest-cli \
+  speedtest-cli 
 
-RUN git clone --recursive https://github.com/critzo/mk-rpi.git
+RUN git clone https://github.com/critzo/mk-rpi.git
 WORKDIR /mk-rpi/test-runner
 COPY --from=build /libndt/libndt-client .
 CMD ["python", "run.py"]
