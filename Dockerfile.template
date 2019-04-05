@@ -43,7 +43,7 @@ RUN sed -i 's/MinProtocol = TLSv1.2/MinProtocol = TLSv1.0/g' \
 RUN git clone --recursive https://github.com/measurement-kit/libndt.git
 WORKDIR /libndt
 RUN wget https://github.com/nlohmann/json/raw/develop/single_include/nlohmann/json.hpp
-RUN cmake .
+RUN cmake -DLIBNDT_HAVE_OPENSSL=true -DLIBNDT_HAVE_CURL=true -DOPENSSL_ROOT_DIR=/usr/bin/openssl .
 RUN cmake --build .
 
 WORKDIR /
