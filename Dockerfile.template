@@ -1,30 +1,21 @@
-FROM balenalib/%%BALENA_MACHINE_NAME%%-debian:testing
-ENV INITSYSTEM on
+FROM debian:testing-slim AS build
+RUN apt-get update
+RUN apt-get install -y autoconf automake clang cmake curl g++ git iproute2 lcov libc++-dev libc++abi-dev libc-ares-dev libcurl4-openssl-dev libevent-dev libmaxminddb-dev libssl-dev libtool make ninja-build libgeoip-dev golang
+RUN sed -i 's/DEFAULT@SECLEVEL=2/DEFAULT@SECLEVEL=1/g' /etc/ssl/openssl.cnf
+RUN sed -i 's/MinProtocol = TLSv1.2/MinProtocol = TLSv1.0/g' \
+    /etc/ssl/openssl.cnf
+RUN git clone --recursive https://github.com/measurement-kit/libndt.git
+WORKDIR /libndt
+RUN wget https://github.com/nlohmann/json/blob/develop/single_include/nlohmann/json.hpp
+RUN wget https://github.com/measurement-kit/libndt/blob/master/libndt.hpp
+RUN cmake .
+RUN cmake --build .
 
+FROM balenalib/%%BALENA_MACHINE_NAME%%-debian:stretch
+ENV INITSYSTEM on
 RUN apt-get update && apt-get install -qy \
-  autoconf \
-  automake \
-  clang \
-  cmake \
-  curl \
   dateutils \
-  g++ \
   git \
-  golang \
-  iproute2 \
-  lcov \
-  libc++-dev \
-  libc++abi-7-dev \
-  libc-ares-dev \
-  libcurl4-openssl-dev \
-  libevent-dev \
-  libgeoip-dev \
-  libmaxminddb-dev \
-  libssl-dev \
-  libtool \
-  make \
-  ninja-build \
-  openssl \
   paris-traceroute \
   python \
   python-crypto \
@@ -35,20 +26,8 @@ RUN apt-get update && apt-get install -qy \
   python-regex \
   python-urllib3 \
   speedtest-cli \
-  wget
-
-RUN sed -i 's/DEFAULT@SECLEVEL=2/DEFAULT@SECLEVEL=1/g' /etc/ssl/openssl.cnf
-RUN sed -i 's/MinProtocol = TLSv1.2/MinProtocol = TLSv1.0/g' \
-    /etc/ssl/openssl.cnf
 
 RUN git clone --recursive https://github.com/critzo/mk-rpi.git
-WORKDIR /mk-rpi
-RUN git clone --recursive https://github.com/measurement-kit/libndt.git
-WORKDIR /mk-rpi/libndt
-RUN wget https://github.com/nlohmann/json/blob/develop/single_include/nlohmann/json.hpp
-RUN wget https://github.com/measurement-kit/libndt/blob/master/libndt.hpp
-RUN cmake .
-RUN cmake --build .
-
 WORKDIR /mk-rpi/test-runner
+COPY --from=build /libndt/libndt-client .
 CMD ["python", "run.py"]
