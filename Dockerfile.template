@@ -42,11 +42,8 @@ RUN sed -i 's/MinProtocol = TLSv1.2/MinProtocol = TLSv1.0/g' \
 RUN git clone https://github.com/critzo/mk-rpi.git
 WORKDIR /mk-rpi
 RUN git clone --recursive https://github.com/measurement-kit/libndt.git
-RUN git clone https://github.com/nlohmann/json.git
-WORKDIR /mk-rpi/json
-RUN git checkout develop
 WORKDIR /mk-rpi/libndt
-COPY /mk-rpi/json/single_include/nlohmann/json.hpp .
+RUN wget https://github.com/nlohmann/json/raw/develop/single_include/nlohmann/json.hpp
 RUN cmake .
 RUN cmake --build .
 
