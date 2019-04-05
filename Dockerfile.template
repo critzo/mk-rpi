@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -qy \
   iproute2 \
   lcov \
   libc++-dev \
-  libc++api-dev \
+  libc++abi-7-dev \
   libc-ares-dev \
   libcurl4-openssl-dev \
   libevent-dev \
