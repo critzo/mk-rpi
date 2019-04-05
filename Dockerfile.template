@@ -54,7 +54,7 @@ RUN apt-get install -qy \
 
 RUN git clone https://github.com/critzo/mk-rpi.git
 WORKDIR /mk-rpi
-COPY --from=build /libndt/libndt_client ./test-runner
+COPY --from=build /libndt/libndt-client ./test-runner
 
 WORKDIR /mk-rpi/test-runner
 CMD ["python", "run.py"]
