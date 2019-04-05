@@ -1,32 +1,34 @@
-FROM golang:1.11 as build
-COPY pusher/* /go/src/github.com/m-lab/pusher
-RUN go get -v github.com/m-lab/pusher
-
-FROM resin/%%RESIN_MACHINE_NAME%%-debian:stretch
+FROM balenalib/%%BALENA_MACHINE_NAME%%-debian:stretch
 ENV INITSYSTEM on
-COPY --from=build /go/bin/pusher /
 
 RUN apt-get update && apt-get install -qy \
   autoconf \
   automake \
-  build-essential \
-  dh-autoreconf \
+  clang \
+  cmake
+  curl \
   dateutils \
-  g++-6 \
-  gcc \
-  gcc-6 \
+  g++ \
   git \
+  golang \
+  iproute2 \
+  lcov \
   libc++-dev \
+  libc++api-dev \
+  libc-ares-dev \
+  libcurl4-openssl-dev \
   libevent-dev \
   libgeoip-dev \
-  libtool \
+  libmaxminddb-dev \
   libssl-dev \
+  libtool \
   make \
+  ninja-build \
+  openssl \
   paris-traceroute \
   python \
   python-crypto \
   python-dev \
-  python-prometheus-client \
   python-setuptools \
   python-tz \
   python-tzlocal \
@@ -35,12 +37,19 @@ RUN apt-get update && apt-get install -qy \
   speedtest-cli \
   wget
 
+RUN sed -i 's/DEFAULT@SECLEVEL=2/DEFAULT@SECLEVEL=1/g' /etc/ssl/openssl.cnf
+RUN sed -i 's/MinProtocol = TLSv1.2/MinProtocol = TLSv1.0/g' \
+    /etc/ssl/openssl.cnf
+
 RUN git clone --recursive https://github.com/critzo/mk-rpi.git
 WORKDIR /mk-rpi
-RUN cp WIP/*.dat measurement-kit/
-WORKDIR /mk-rpi/measurement-kit
-RUN ./autogen.sh && ./configure && make && make install && ldconfig
-RUN mv /mk-rpi/measurement-kit/GeoIP* /mk-rpi/test-runner/
+RUN git checkout libndt
+RUN git clone --recursive https://github.com/measurement-kit/libndt.git
+WORKDIR /mk-rpi/libndt
+RUN wget https://github.com/nlohmann/json/blob/develop/single_include/nlohmann/json.hpp
+RUN wget https://github.com/measurement-kit/libndt/blob/master/libndt.hpp
+RUN cmake .
+RUN cmake --build .
 
 WORKDIR /mk-rpi/test-runner
 CMD ["python", "run.py"]
