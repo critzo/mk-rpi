@@ -42,7 +42,7 @@ RUN sed -i 's/MinProtocol = TLSv1.2/MinProtocol = TLSv1.0/g' \
 
 RUN git clone --recursive https://github.com/measurement-kit/libndt.git
 WORKDIR /libndt
-RUN cmake -DOPENSSL_ROOT_DIR=/usr/bin/openssl -DOPENSSL_USE_STATIC_LIBS=true
+RUN cmake -DOPENSSL_ROOT_DIR=/usr/include/openssl .
 RUN cmake --build .
 
 WORKDIR /
