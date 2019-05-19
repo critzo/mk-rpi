@@ -2,8 +2,7 @@ FROM balenalib/%%BALENA_MACHINE_NAME%%-debian:stretch
 ENV INITSYSTEM on
 ENV COMMIT=latest
 
-RUN apt-get update
-RUN apt-get install -qy \
+RUN apt-get update && apt-get install -qy \
   autoconf \
   automake \
   clang \
@@ -38,19 +37,17 @@ RUN apt-get install -qy \
   speedtest-cli \
   wget
 
-RUN sed -i 's/DEFAULT@SECLEVEL=2/DEFAULT@SECLEVEL=1/g' /etc/ssl/openssl.cnf
-RUN sed -i 's/MinProtocol = TLSv1.2/MinProtocol = TLSv1.0/g' \
-    /etc/ssl/openssl.cnf
-
-RUN git clone --recursive https://github.com/measurement-kit/libndt.git
-WORKDIR /libndt
-RUN cmake -DLIBNDT_OPENSSL=/usr/bin/ .
-RUN cmake --build .
-
+RUN git clone https://github.com/sivel/speedtest-cli.git
+WORKDIR /speedtest-cli
+RUN python setup.py install
 WORKDIR /
-RUN git clone https://github.com/critzo/mk-rpi.git
+
+RUN git clone --recursive https://github.com/critzo/mk-rpi.git
 WORKDIR /mk-rpi
-COPY --from=build /libndt/libndt-client ./test-runner
+RUN cp WIP/*.dat measurement-kit/
+WORKDIR /mk-rpi/measurement-kit
+RUN ./autogen.sh && ./configure && make && make install && ldconfig
+RUN mv /mk-rpi/measurement-kit/GeoIP* /mk-rpi/test-runner/
 
 WORKDIR /mk-rpi/test-runner
 CMD ["python", "run.py"]
