@@ -43,7 +43,7 @@ def run_ndt_test():
     device_loc = os.environ['DEVICE_LOC']
     connection_loc = os.environ['CONNECTION_LOC']
     reportfile = "%s-%s-%s-%s-%d.njson" % (site, test, device_loc, connection_loc, now)
-    flags = "--reportfile=/data/%s" % reportfile
+    flags = "--no-bouncer --reportfile=/data/%s" % reportfile
     result_raw = subprocess.check_output(["measurement_kit", flags, "ndt"])
 
     with open('/data/%s' % reportfile) as data_file:
