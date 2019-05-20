@@ -1,6 +1,6 @@
 FROM balenalib/%%BALENA_MACHINE_NAME%%-debian:stretch
 ENV INITSYSTEM on
-ENV COMMIT=9695fa9fb065d8f6c83c1e2c4ac670e92d626059
+ENV COMMIT=4189839861eeca7cc6ebc7910367a4ca11696731
 
 RUN apt-get update && apt-get install -qy \
   autoconf \
